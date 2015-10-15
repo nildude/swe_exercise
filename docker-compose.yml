@@ -1,0 +1,33 @@
+frontend:
+    image: nginx
+    links:
+        - webapp
+    volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+        - 80:80
+webapp:
+    restart: always
+    build : ./webapp
+    links:
+        - postgres
+    ports:
+        - 8100:5000
+    volumes_from:
+        - postgres
+    command: "python web_counter.py"
+postgres:
+    image: postgres
+    volumes:
+        - /var/run/postgresql
+        - ./init_db.sh:/usr/init/init_db.sh
+    volumes_from:
+        - data
+    expose:
+        - "5432"
+
+data:
+    image: postgres
+    volumes:
+        - /var/lib/postgresql/data
+    command: "sleep infinity"

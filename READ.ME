@@ -1,0 +1,13 @@
+This Repository contains an implementation of a simple web counter implemnted in Docker-compose, Flask, nginx and postgresql.
+
+In order to initialise the service you have to run the initialisation script in the postgres container so that the database table is created for the service to use. This can be achieved by running th following commands:
+
+       docker-compose up -d postgres
+       docker exec sweexercise_postgres_1 sh /usr/init/init_db.sh
+
+This will create a 'testdb' database with a 'counter' table with a single row.
+
+
+To start the counter service, you can then run the command:
+
+        docker-compose up -d
